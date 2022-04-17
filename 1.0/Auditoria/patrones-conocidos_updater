@@ -8,7 +8,7 @@ SCRIPT_VERSION=20181122
 ## Funciones comunes. Su nombre empieza por f_ ##
 ############################################################
 f_variables(){
-	. /opt/wifislax-updaters/Funciones/funciones_updater
+	. /opt/wifiway-updaters/Funciones/funciones_updater
 }
 
 ############################################################
@@ -21,7 +21,7 @@ F_variables() {
 	EXTENSION=txt
 	GESTOR=wget
 	echo -ne "\033]2;${PRGNAM}_updater\007"
-	WEB=https://raw.githubusercontent.com/wifislax-ng/wifislax64-updaters/master
+	WEB=https://raw.githubusercontent.com/wifislax-ng/wifiway32-updaters/master
 	VERSION="$(curl -s $WEB/$SRCNAM.$EXTENSION|grep "^# VERSION [0-9]*$"|awk '{print $3}')"
 	SOURCES=$SRCNAM.$EXTENSION
 	DOWNLOAD=$WEB/$SOURCES

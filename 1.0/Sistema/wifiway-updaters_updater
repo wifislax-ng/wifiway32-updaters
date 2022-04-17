@@ -2,13 +2,13 @@
 
 # Script for www.seguridadwireless.net by vk496
 
-SCRIPT_VERSION=20210909
+SCRIPT_VERSION=20220418
 
 ############################################################
 ## Funciones comunes. Su nombre empieza por f_ ##
 ############################################################
 f_variables(){
-   . /opt/wifislax-updaters/Funciones/funciones_updater
+   . /opt/wifiway-updaters/Funciones/funciones_updater
 }
 
 ############################################################
@@ -27,9 +27,9 @@ fi
 
 # Definicion de variables
 F_variables() {
-   PRGNAM=wifislax-updaters
-   WIFISLAX=$(cat /etc/wifislax-version|cut -d ' ' -f2)
-   WEB="https://github.com/wifislax-ng/wifislax64-updaters"
+   PRGNAM=wifiway-updaters
+   WIFIWAY=$(cat /etc/wifiway-version|cut -d ' ' -f2)
+   WEB="https://github.com/wifislax-ng/wifiway32-updaters"
    echo -ne "\033]2;${PRGNAM}_updater\007"
    VERSION=$(echo $(date +"%Y%m%d"))
    GESTOR=git
@@ -38,7 +38,7 @@ F_variables() {
 
 #Creamos directorios extra
 F_extradirs(){
-mkdir -p $PKG $PKG/usr/share/applications/wifislax/Actualizadores
+mkdir -p $PKG $PKG/usr/share/applications/wifiway/Actualizadores
 }
 
 # Directorios de trabajo y actualizar
@@ -66,10 +66,10 @@ echo
 #Contador de todos los scripts
 contador=0
 
-carpetas="$(find /tmp/$PRGNAM/$WIFISLAX -type d | grep -v "\.git" | rev | cut -d/ -f1 | rev | grep -v "^$" | sort |grep -v $WIFISLAX)"
+carpetas="$(find /tmp/$PRGNAM/$WIFIWAY -type d | grep -v "\.git" | rev | cut -d/ -f1 | rev | grep -v "^$" | sort |grep -v $WIFIWAY)"
 #Obtenemos la carpeta del server, y la usamos como carpeta local
 for carpeta in $carpetas; do
-   archivos="$(find /tmp/$PRGNAM/$WIFISLAX/$carpeta -type f |rev | cut -d/ -f1 | rev| grep -v "^$"|sort)"
+   archivos="$(find /tmp/$PRGNAM/$WIFIWAY/$carpeta -type f |rev | cut -d/ -f1 | rev| grep -v "^$"|sort)"
    #Obtenemos el archivo del server, y lo usamos como archivo local
    for archivo in $archivos; do
       let contador=$contador+1
@@ -81,10 +81,10 @@ for carpeta in $carpetas; do
             #Si se trata de funciones.sh, usamos variables distintas al habitual, si no,
             if [ ${archivo} == "funciones_updater" ]; then
                LOCAL_VERSION=$(cat /opt/$PRGNAM/$carpeta/$archivo | grep -m1 "FUNCIONES_VERSION=" | cut -d "=" -f2)
-               WEB_VERSION=$(cat /tmp/$PRGNAM/$WIFISLAX/$carpeta/$archivo | head -5 | grep "FUNCIONES_VERSION=" | head -1 |cut -d "=" -f2)
+               WEB_VERSION=$(cat /tmp/$PRGNAM/$WIFIWAY/$carpeta/$archivo | head -5 | grep "FUNCIONES_VERSION=" | head -1 |cut -d "=" -f2)
             else
                LOCAL_VERSION=$(cat /opt/$PRGNAM/$carpeta/$archivo | grep -m1 "SCRIPT_VERSION=" | cut -d "=" -f2)
-               WEB_VERSION=$(cat /tmp/$PRGNAM/$WIFISLAX/$carpeta/$archivo | head -5 | grep "SCRIPT_VERSION=" | head -1 |cut -d "=" -f2)
+               WEB_VERSION=$(cat /tmp/$PRGNAM/$WIFIWAY/$carpeta/$archivo | head -5 | grep "SCRIPT_VERSION=" | head -1 |cut -d "=" -f2)
             fi
             
          echo -n "${VERDE}EXISTE$CIERRE"
@@ -94,7 +94,7 @@ for carpeta in $carpetas; do
 		if [ ! -d $PKG/opt/$PRGNAM/$carpeta ]; then
 		  mkdir -p $PKG/opt/$PRGNAM/$carpeta/
 		fi
-		cp /tmp/$PRGNAM/$WIFISLAX/$carpeta/$archivo $PKG/opt/$PRGNAM/$carpeta/$archivo
+		cp /tmp/$PRGNAM/$WIFIWAY/$carpeta/$archivo $PKG/opt/$PRGNAM/$carpeta/$archivo
 		echo " + ${AMARILLO}ACTUALIZADO $ROSA(${WEB_VERSION:6}/${WEB_VERSION:4:2}/${WEB_VERSION:0:4})$CIERRE"
 		chmod +x $PKG/opt/$PRGNAM/$carpeta/$archivo
 	    else
@@ -110,14 +110,14 @@ for carpeta in $carpetas; do
 			mkdir -p $PKG/opt/$PRGNAM/$carpeta/
 		fi
 		
-		cp /tmp/$PRGNAM/$WIFISLAX/$carpeta/$archivo $PKG/opt/$PRGNAM/$carpeta/$archivo
+		cp /tmp/$PRGNAM/$WIFIWAY/$carpeta/$archivo $PKG/opt/$PRGNAM/$carpeta/$archivo
 		LOCAL_VERSION=$(cat $PKG/opt/$PRGNAM/$carpeta/$archivo | grep -m1 "SCRIPT_VERSION=" | cut -d "=" -f2)
 		chmod +x $PKG/opt/$PRGNAM/$carpeta/$archivo
 		echo "${ROJO}DESCARGADO$CIERRE $BLANCO($ROSA${LOCAL_VERSION:6}/${LOCAL_VERSION:4:2}/${LOCAL_VERSION:0:4}$BLANCO)$CIERRE"
 		PRGNAM_CORTO=${archivo%_updater}
-		mkdir -p $PKG/usr/share/applications/wifislax/Actualizadores/$carpeta
+		mkdir -p $PKG/usr/share/applications/wifiway/Actualizadores/$carpeta
 		
-		CATEGORIA="$(grep "CATEGORIA=" /tmp/$PRGNAM/$WIFISLAX/$carpeta/$archivo| cut -d"=" -f2 | sed 's/"//g')"
+		CATEGORIA="$(grep "CATEGORIA=" /tmp/$PRGNAM/$WIFIWAY/$carpeta/$archivo| cut -d"=" -f2 | sed 's/"//g')"
 		if [ -z "$CATEGORIA" ]; then
 		  CATEGORIA=$carpeta
 		fi
@@ -125,14 +125,14 @@ for carpeta in $carpetas; do
 #Creamos el desktop del menu
 echo "[Desktop Entry]
 Categories=$CATEGORIA;
-Exec=sh -c \"/opt/wifislax-updaters/$carpeta/$archivo;bash\"
+Exec=sh -c \"/opt/wifiway-updaters/$carpeta/$archivo;bash\"
 Icon=updaters
 MimeType=
 Name=$PRGNAM_CORTO
-Path=/opt/wifislax-updaters/$carpeta/
+Path=/opt/wifiway-updaters/$carpeta/
 Terminal=true
 TerminalOptions=
-Type=Application">$PKG/usr/share/applications/wifislax/Actualizadores/$carpeta/$PRGNAM_CORTO.desktop
+Type=Application">$PKG/usr/share/applications/wifiway/Actualizadores/$carpeta/$PRGNAM_CORTO.desktop
 
       fi
    done
@@ -151,15 +151,15 @@ if [ $CREAR_MODULO = SI ]; then
    echo -ne "${CYAN} $ROJO$contador${CYAN} scripts$CIERRE"
    sleep 1
 
-   mkdir -p $PKG/usr/bin/ $PKG/usr/share/applications/wifislax/Actualizadores/Tools $PKG/{opt,etc}/wifislax-updaters $PKG/usr/share/pixmaps
-   cp -Ru /usr/share/applications/wifislax/Actualizadores/ $PKG/usr/share/applications/wifislax/
-   cp -Ru /opt/wifislax-updaters/ $PKG/opt/
+   mkdir -p $PKG/usr/bin/ $PKG/usr/share/applications/wifiway/Actualizadores/Tools $PKG/{opt,etc}/wifiway-updaters $PKG/usr/share/pixmaps
+   cp -Ru /usr/share/applications/wifiway/Actualizadores/ $PKG/usr/share/applications/wifiway/
+   cp -Ru /opt/wifiway-updaters/ $PKG/opt/
    cp -Ru /usr/share/pixmaps/{Blacklist_updaters.png,updaters.png,buscador_updaters.png,Config_updaters.png} $PKG/usr/share/pixmaps/
-   cp -Ru /etc/wifislax-updaters/* $PKG/etc/wifislax-updaters
+   cp -Ru /etc/wifiway-updaters/* $PKG/etc/wifiway-updaters
    cp -Ru /usr/bin/{buscador_updaters,Config_updaters,Blacklist_updaters,slackbuilds.txt_updater,base_updater} $PKG/usr/bin/
    
-if [ -d $PKG/usr/share/applications/wifislax/Actualizadores/Funciones ]; then
-   rm -rf $PKG/usr/share/applications/wifislax/Actualizadores/Funciones
+if [ -d $PKG/usr/share/applications/wifiway/Actualizadores/Funciones ]; then
+   rm -rf $PKG/usr/share/applications/wifiway/Actualizadores/Funciones
 fi
 fi
 cd ..

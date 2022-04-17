@@ -61,7 +61,7 @@ exit 0
 fi
 
 # Comprobar updates para el script
-SERVIDOR_WEB="https://raw.githubusercontent.com/wifiway-ng/wifiway32-updaters/master/$WIFIWAY"
+SERVIDOR_WEB="https://raw.githubusercontent.com/wifislax-ng/wifiway32-updaters/master/$WIFIWAY"
 DIRECTORIO=$(find /opt/wifiway-updaters -type f -name ${SCRIPTNAME} | rev | cut -d/ -f2- | rev | head -1)
 SERVIDOR_VERSION=$(timeout -s SIGTERM 3 curl -s $SERVIDOR_WEB/${DIRECTORIO##*/}/${SCRIPTNAME} | grep "SCRIPT_VERSION=" | head -1 |cut -d "=" -f2)
 

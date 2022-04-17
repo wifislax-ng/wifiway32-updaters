@@ -61,14 +61,14 @@ if [ -d $TMP ]; then
 rm -rf $TMP
 fi
 mkdir -p $TMP
-cd /opt/wifislax-updaters
+cd /opt/wifiway-updaters
 UPDATERS=$(find . -type f -name "*_updater")
 echo 
 echo "${BLANCO}[${VERDE}*${BLANCO}]$AMARILLO Copiando updaters a directorio temporal ..."
 cp -rf $UPDATERS $TMP &>/dev/null
 rm -rf $TMP/linux* &>/dev/null
 rm -rf $TMP/funciones_updater &>/dev/null
-rm -rf $TMP/wifislax-updaters_updater &>/dev/null
+rm -rf $TMP/wifiway-updaters_updater &>/dev/null
 rm -rf $TMP/last_update &>/dev/null
 rm -rf $TMP/firefox_multi_updater &>/dev/null
 }

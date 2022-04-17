@@ -10,7 +10,7 @@ SCRIPT_VERSION=$(date +%Y%m%d)
 ## Funciones comunes. Su nombre empieza por f_ ##
 ############################################################
 f_variables(){
-	. /opt/wifislax-updaters/Funciones/funciones_updater
+	. /opt/wifiway-updaters/Funciones/funciones_updater
 }
 
 ############################################################
