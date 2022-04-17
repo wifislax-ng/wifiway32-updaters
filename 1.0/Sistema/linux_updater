@@ -3,7 +3,7 @@
 # Script by USUARIONUEVO @ www.seguridadwireless.net
 
 # Eliminamos posibles ficheros viejos de modificaciones de scripts	
-rm -rf /opt/wifislax-updaters/*/*~ &>/dev/null
+rm -rf /opt/wifiway-updaters/*/*~ &>/dev/null
 
 SCRIPT_VERSION=20220417
 
@@ -25,7 +25,7 @@ PRGNAM2=kernel
 PRGNAM=linux
 KARCH=x86
 SCRIPTNAME=linux_updater
-TAG=wifislax
+TAG=wifiway
 DESKTOP=$(cat '/root/.config/user-dirs.dirs' |grep DESKTOP|cut -d '"' -f2|cut -d/ -f2)
 M0DNUM=000
 MODNAM=Kernel
@@ -61,8 +61,8 @@ exit 0
 fi
 
 # Comprobar updates para el script
-SERVIDOR_WEB="https://raw.githubusercontent.com/wifislax-ng/wifislax64-updaters/master/$WIFISLAX"
-DIRECTORIO=$(find /opt/wifislax-updaters -type f -name ${SCRIPTNAME} | rev | cut -d/ -f2- | rev | head -1)
+SERVIDOR_WEB="https://raw.githubusercontent.com/wifiway-ng/wifiway32-updaters/master/$WIFIWAY"
+DIRECTORIO=$(find /opt/wifiway-updaters -type f -name ${SCRIPTNAME} | rev | cut -d/ -f2- | rev | head -1)
 SERVIDOR_VERSION=$(timeout -s SIGTERM 3 curl -s $SERVIDOR_WEB/${DIRECTORIO##*/}/${SCRIPTNAME} | grep "SCRIPT_VERSION=" | head -1 |cut -d "=" -f2)
 
 
@@ -209,7 +209,7 @@ sleep 1
 patch -f -p1 < $PARCHE||exit 1
 
 # Ponemos nuestro logo
-LOGO=/usr/share/pixmaps/wifislax_logo_blue.png
+LOGO=/usr/share/pixmaps/wifiway_logo.png
 LOGONEW=/usr/src/$PRGNAM-$KERNEL_ELEGIDO/drivers/video/logo/logo_linux_clut224.ppm
 if [ -f $LOGO ]; then
 echo ""
@@ -306,8 +306,8 @@ TIEMPO="$(date --date=@$(($AHORA-$COMIENZO)) +%X)"
 echo ""
 echo "${AMARILLO}Tiempo empleado${BLANCO}: $TIEMPO"
 echo ""
-# Si no es wifislax ya hemos acabado aqui.
-if [ ! -f /etc/wifislax-version ]; then
+# Si no es wifiway ya hemos acabado aqui.
+if [ ! -f /etc/wifiway-version ]; then
 echo ""
 echo ""$AMARILLO"Bye Bye"$CIERRE""
 exit 0
@@ -318,7 +318,7 @@ echo ""
 echo ""$AMARILLO"Bye Bye"$CIERRE""
 exit 0
 fi
-# Si se trata de wifislax en HDD puedo instalar el kernel.
+# Si se trata de wifiway en HDD puedo instalar el kernel.
 echo ""$AMARILLO"Pulsa ENTER si quieres instalar el kernel,si no te interesa cierra el scipt."$CIERRE""
 read junk
 echo ""
