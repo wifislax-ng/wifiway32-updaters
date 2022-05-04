@@ -43,7 +43,7 @@ F_variables() {
 	WEB=https://download.mozilla.org/?product=firefox-latest\&os=linux\&lang=$LANGUAGE
 	VERSION=$(curl -s $WEB|grep .tar.bz2|tail -1|rev|cut -d- -f1|rev|cut -d t -f-1|sed 's/.$//g')
 	SOURCES=$SRCNAM-$VERSION.$EXTENSION
-	DOWNLOAD=https://ftp.mozilla.org/pub/firefox/releases/$VERSION/linux-$ARCH/$LANGUAGE/$SOURCES
+	DOWNLOAD=https://ftp.mozilla.org/pub/firefox/releases/$VERSION/linux-i686/$LANGUAGE/$SOURCES
 }
 
 

@@ -23,7 +23,7 @@ F_variables() {
 	WEB=https://download.mozilla.org/?product=firefox-latest\&os=linux\&lang=es-ES
 	VERSION=$(curl -s $WEB|grep .$EXTENSION|tail -1|rev|cut -d- -f1|rev|cut -d t -f-1|sed 's/.$//g')
 	SOURCES=$PRGNAM-$VERSION.$EXTENSION
-	DOWNLOAD=https://ftp.mozilla.org/pub/firefox/releases/$VERSION/linux-$ARCH/es-ES/$SOURCES
+	DOWNLOAD=https://ftp.mozilla.org/pub/firefox/releases/$VERSION/linux-i686/es-ES/$SOURCES
 }
 
 # Descomprimimos el fichero descargado y compilamos
