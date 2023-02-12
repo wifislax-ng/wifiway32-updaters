@@ -2,7 +2,7 @@
 
 # Script by www.seguridadwireless.net
 
-SCRIPT_VERSION=20220317
+SCRIPT_VERSION=20230212
 CATEGORIA="Reproductores multimedia"
 
 ############################################################
@@ -30,16 +30,21 @@ F_variables() {
 
 # Comprobar dependencias
 F_dependencias(){
-DEPENDENCIAS="
+DEPENDENCIAS="libdaemon
+avahi
 cddb-py
 streamripper
+python3-pep517
+python3-build
+python3-installer
 mutagen
 bsddb3
-pluggy
+python3-pluggy
 py
 more-itertools
 atomicwrites
 python3-attrs
+iniconfig
 python3-pytest
 decorator
 ipython_genutils
@@ -51,26 +56,60 @@ pathlib
 pickleshare
 python3-prompt_toolkit
 simplegeneric
+wheel
+python3-pep517
+python3-build
+python3-installer
+python3-pluggy
+python3-editables
+python3-pathspec
+python3-hatchling
 traitlets
+python3-matplotlib-inline
 backcall
+python3-pure_eval
+entrypoints
+python2-setuptools-scm
+python-jeepney
+secretstorage
+asn1crypto
+pyasn1
+python-toml
+python3-semantic-version
+python3-setuptools-rust
+cryptography
+python-keyring
+asttokens
+python3-stack_data
+python3-executing
 ipython
 functools-lru-cache
 python2-soupsieve
 python3-soupsieve
 BeautifulSoup4
+python3-webencodings
 html5lib
+python2-BeautifulSoup4
 lxml
+python3-rfc3986
+python3-sniffio
+python3-anyio
+python3-h11
+python3-httpcore
+click
+CommonMark
+python3-poetry-core
+python3-flit_core
+python3-mdurl
+python3-markdown-it-py
+python3-rich
+python3-hatch_fancy_pypi_readme
+python3-httpx
 pylast
 musicbrainzngs
-bubblewrap
-geoclue2
-libwpe
-wpebackend-fdo
-xdg-dbus-proxy
-webkit2gtk
 gst-python
-feedparser
-" 
+python3-sgmllib3k
+feedparser"
 f_dependencias
 }
 
