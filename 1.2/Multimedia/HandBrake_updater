@@ -1,0 +1,112 @@
+#!/bin/sh
+
+# Script by www.seguridadwireless.net
+
+SCRIPT_VERSION=20230212
+CATEGORIA="Editores de video"
+
+############################################################
+## Funciones comunes. Su nombre empieza por f_ ##
+############################################################
+f_variables(){
+	. /opt/wifiway-updaters/Funciones/funciones_updater
+}
+
+############################################################
+## Funciones propias del script. Su nombre empieza por F_ ##
+############################################################
+# Definicion de variables
+F_variables() {
+	PRGNAM=HandBrake
+	EXTENSION=tar.bz2
+	GESTOR=wget
+	echo -ne "\033]2;${PRGNAM}_updater\007"
+	WEB=https://github.com/$PRGNAM/$PRGNAM
+	VERSION=$(curl -s $WEB/releases|grep .$EXTENSION|head -1|cut -d/ -f6)
+	SOURCES=$PRGNAM-$VERSION-source.$EXTENSION
+	CD=$PRGNAM-$VERSION
+	DOWNLOAD=$WEB/releases/download/$VERSION/$SOURCES
+}
+
+# Comprobar dependencias
+F_dependencias(){
+DEPENDENCIAS="perl-Cstools perl-Unicode-Map perl-Unicode-String perl-Unicode-Map8 enca libass x264 x265 numactl" 
+f_dependencias
+}
+
+# Descomprimimos el fichero descargado y compilamos
+F_compilar(){
+# FIX 32 BIT BUILD
+echo "ZGlmZiAtTmF1ciBIYW5kQnJha2UtMS41LjEvbGliaGIvbW9kdWxlLmRlZnMgSGFuZEJyYWtlLTEu
+NS4xLnBhdGNoZWQvbGliaGIvbW9kdWxlLmRlZnMKLS0tIEhhbmRCcmFrZS0xLjUuMS9saWJoYi9t
+b2R1bGUuZGVmcwkyMDIyLTAxLTEwIDE0OjExOjM3LjAwMDAwMDAwMCAtMDUwMAorKysgSGFuZEJy
+YWtlLTEuNS4xLnBhdGNoZWQvbGliaGIvbW9kdWxlLmRlZnMJMjAyMi0wMy0yNCAxNTo1Nzo0NS44
+MDM1NDgxNDEgLTA0MDAKQEAgLTEyOSwxMCArMTI5LDYgQEAKIExJQkhCLmRsbC5saWJzICs9ICQo
+Q09OVFJJQi5idWlsZC8pbGliL2xpYnZwbC5hCiBlbmRpZgogCi1pZmVxICgxLCQoRkVBVFVSRS54
+MjY1KSkKLUxJQkhCLmRsbC5saWJzICs9ICQoQ09OVFJJQi5idWlsZC8pbGliL2xpYngyNjUuYQot
+ZW5kaWYKLQogaWZuZXEgKCQoSEFTLmljb252KSwxKQogTElCSEIuZGxsLmxpYnMgKz0gJChDT05U
+UklCLmJ1aWxkLylsaWIvbGliaWNvbnYuYQogZWxzZQpkaWZmIC1OYXVyIEhhbmRCcmFrZS0xLjUu
+MS9tYWtlL2luY2x1ZGUvbWFpbi5kZWZzIEhhbmRCcmFrZS0xLjUuMS5wYXRjaGVkL21ha2UvaW5j
+bHVkZS9tYWluLmRlZnMKLS0tIEhhbmRCcmFrZS0xLjUuMS9tYWtlL2luY2x1ZGUvbWFpbi5kZWZz
+CTIwMjItMDEtMTAgMTQ6MTE6MzcuMDAwMDAwMDAwIC0wNTAwCisrKyBIYW5kQnJha2UtMS41LjEu
+cGF0Y2hlZC9tYWtlL2luY2x1ZGUvbWFpbi5kZWZzCTIwMjItMDMtMjQgMTU6NTg6MjguOTcyMjYz
+NjkyIC0wNDAwCkBAIC00MCwxMyArNDAsNiBAQAogICAgIE1PRFVMRVMgKz0gY29udHJpYi9mZGst
+YWFjCiBlbmRpZgogCi1pZmVxICgxLCQoRkVBVFVSRS54MjY1KSkKLSAgICBNT0RVTEVTICs9IGNv
+bnRyaWIveDI2NQotICAgIE1PRFVMRVMgKz0gY29udHJpYi94MjY1XzhiaXQKLSAgICBNT0RVTEVT
+ICs9IGNvbnRyaWIveDI2NV8xMGJpdAotICAgIE1PRFVMRVMgKz0gY29udHJpYi94MjY1XzEyYml0
+Ci1lbmRpZgotCiBNT0RVTEVTICs9IGNvbnRyaWIvbGliZGF2MWQKIE1PRFVMRVMgKz0gY29udHJp
+Yi96aW1nCiBNT0RVTEVTICs9IGNvbnRyaWIvZmZtcGVnCmRpZmYgLU5hdXIgSGFuZEJyYWtlLTEu
+NS4xL3Rlc3QvbW9kdWxlLmRlZnMgSGFuZEJyYWtlLTEuNS4xLnBhdGNoZWQvdGVzdC9tb2R1bGUu
+ZGVmcwotLS0gSGFuZEJyYWtlLTEuNS4xL3Rlc3QvbW9kdWxlLmRlZnMJMjAyMi0wMS0xMCAxNDox
+MTozNy4wMDAwMDAwMDAgLTA1MDAKKysrIEhhbmRCcmFrZS0xLjUuMS5wYXRjaGVkL3Rlc3QvbW9k
+dWxlLmRlZnMJMjAyMi0wMy0yNCAxNTo1OToxOS45NTcxMDg3OTAgLTA0MDAKQEAgLTIzLDYgKzIz
+LDEwIEBACiAgICAgVEVTVC5HQ0MubCArPSBmb250Y29uZmlnCiBlbmRpZgogCitpZmVxICgxLCQo
+RkVBVFVSRS54MjY1KSkKKyAgICBURVNULkdDQy5sICs9IHgyNjUKK2VuZGlmCisKIGlmZXEgKDEs
+JChGRUFUVVJFLnFzdikpCiAgICAgVEVTVC5HQ0MubCArPSB2cGwKIGlmbmVxICgsJChmaWx0ZXIg
+JChIT1NULnN5c3RlbSksbGludXggZnJlZWJzZCkpCg=="|base64 -d > $TMP/system_x265.diff
+patch -p1 -i $TMP/system_x265.diff||exit 1
+CFLAGS="$SLKCFLAGS " \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+    --prefix=/usr
+
+  make -C build
+  make -C build DESTDIR=$PKG install
+}
+
+###################################
+## BLOQUE PRINCIPAL DE EJECUCION ##
+###################################
+# Si se cierra el script inesperadamente, ejecutar la funcion de limpieza
+trap f_exitmode SIGHUP SIGINT
+
+#Inicializamos las variables globales
+f_variables
+#Asignamos o detectamos arquitectura
+f_arquitectura
+#Comprobamos conexion a Internet
+f_comprobarConexion
+#Inicializamos las variables del script
+F_variables
+#Creamos directorio de trabajo
+f_directorioTemporal
+#Mostramos el mensaje de presentacion
+f_presentacion
+#Comprobamos updates del script
+f_comprobarUpdates
+#Comprobamos version instalada del paquete
+f_versionInstalada
+# Comprobar dependencias
+F_dependencias
+#Si no existe el fichero se descargara
+f_download
+#Descomprimir sources
+f_descomprimir
+#Cd a ruta
+f_cd
+#Descomprimir fichero descargado y compilamos
+F_compilar
+#Hacemos strip sobre el paquete
+f_strip
+#Creamos xzm , instalamos y salimos
+f_tareasFinales
